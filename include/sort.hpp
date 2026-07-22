@@ -161,3 +161,27 @@ void merge_sort(std::vector<T>& nums) {
         interval *= 2;
     }
 }
+
+template<typename T>
+void pigeonhole_sort(std::vector<T>& nums) {
+    if (nums.size() < 2) return;
+    // Calculate hole size
+    auto [min_it, max_it] = std::minmax_element(nums.begin(), nums.end());
+    T min = *min_it, max = *max_it;
+    T hole_size = max - min + 1;
+    auto holes = std::vector<std::vector<T>>(hole_size);
+    // Push value into right hole
+    for (T num: nums) {
+        holes[num - min].push_back(num);
+    }
+    // Write back to nums using data in holes
+    auto in_it = nums.begin();
+    for (auto& hole: holes) {
+        if (!hole.empty()) {
+            for (T num: hole) {
+                *in_it = num;
+                in_it++;
+            }
+        }
+    }
+}
