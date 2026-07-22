@@ -129,8 +129,11 @@ void merge_sort(std::vector<T>& nums) {
     if (nums.size() < 2) return;
     int interval = 1;
     while (interval < nums.size()) {
+        // Double the interval at each loop
         for (int i = 0; i < nums.size(); i += interval * 2) {
+            // Use temp vector to store merged data
             auto temp_vec = std::vector<T>();
+            // Merge two ordered sequences
             int p1 = i, p2 = i + interval, p1_end = p1 + interval, p2_end = p2 + interval;
             while (p1 < p1_end && p2 < p2_end && p1 < nums.size() && p2 < nums.size()) {
                 if (nums[p1] < nums[p2]) {
@@ -141,6 +144,7 @@ void merge_sort(std::vector<T>& nums) {
                     p2++;
                 }
             }
+            // Residual process
             while (p1 != p1_end && p1 < nums.size()) {
                 temp_vec.push_back(nums[p1]);
                 p1++;
@@ -149,6 +153,7 @@ void merge_sort(std::vector<T>& nums) {
                 temp_vec.push_back(nums[p2]);
                 p2++;
             }
+            // Write data back to original vector
             for (int j = 0; j < temp_vec.size(); ++j) {
                 nums[i + j] = temp_vec[j];
             }
