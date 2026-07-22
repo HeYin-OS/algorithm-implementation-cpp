@@ -14,3 +14,4 @@ REGISTER_INTEGER_SORT_TESTS(CountingSortTest, counting_sort)
 
 REGISTER_INTEGER_SORT_TESTS(MergeSortTest, merge_sort)
 
+REGISTER_INTEGER_SORT_TESTS(PigeonHoleSortTest, pigeonhole_sort)
