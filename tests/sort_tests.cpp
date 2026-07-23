@@ -26,3 +26,4 @@ REGISTER_INTEGER_SORT_TESTS(GnomeSortTest, gnome_sort)
 
 ////////////////////////////// Unstable Sorting Algorithm Tests
 
+REGISTER_INTEGER_SORT_TESTS(SelectionTest, selection_sort)
