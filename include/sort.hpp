@@ -249,7 +249,16 @@ void tim_sort(std::vector<T>& nums) {
 
 template<typename T>
 void selection_sort(std::vector<T>& nums) {
-    
+    if (nums.size() < 2) return;
+    for (int i = 0; i < nums.size(); ++i) {
+        T prefer_idx = i;
+        // Find the preferring idx in latter indices
+        for (int j = i + 1; j < nums.size(); ++j) {
+            if (nums[j] < nums[prefer_idx]) prefer_idx = j;
+        }
+        // Swap the value
+        if (prefer_idx != i) std::swap(nums[prefer_idx], nums[i]);
+    }
 }
 
 template<typename T>
