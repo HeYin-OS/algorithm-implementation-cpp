@@ -194,7 +194,6 @@ void pigeonhole_sort(std::vector<T>& nums) {
     }
 }
 
-
 template<typename T>
 void binarytree_sort(std::vector<T>& nums) {
     auto avl_tree = AVL_Tree<T>();
