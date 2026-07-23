@@ -194,7 +194,35 @@ void binarytree_sort(std::vector<T>& nums) {
 
 template<typename T>
 void radix_sort(std::vector<T>& nums) {
-    
+    if (nums.size() < 2) return;
+    auto max = *std::max_element(nums.begin(), nums.end());
+    auto min = *std::min_element(nums.begin(), nums.end());
+    // Calculate loop times
+    int digits = 0;
+    {
+        auto diff = max - min;
+        while(diff != 0) {
+            digits++;
+            diff /= 10;
+        }
+    }
+    // divider: 1 -> 10 -> 100 -> ...
+    T divider = 1;
+    while(digits--) {
+        // Analyze number in this digit (0 1 ... 9) and put them in right idx of radices
+        auto radices = std::vector<std::vector<T>>(10, std::vector<T>());
+        for (auto num: nums) {
+            auto idx = ((num - min) / divider) % 10;
+            radices[idx].push_back(num);
+        }
+        nums.resize(0);
+        for (auto& vec: radices) {
+            for (auto num: vec) {
+                nums.push_back(num);
+            }
+        }
+        divider *= 10;
+    }
 }
 
 template<typename T>
