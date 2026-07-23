@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <vector>
 
+// ---------------------------------------------------------------
+// Stable Sorting Algorithm
+// ---------------------------------------------------------------
+
 template<typename T>
 void bubble_sort(std::vector<T>& nums) {
     const int n = nums.size();
