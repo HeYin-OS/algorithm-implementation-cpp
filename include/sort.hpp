@@ -99,13 +99,10 @@ void bucket_sort(std::vector<T>& nums) {
         b.sort_safe();
     });
     // Overwrite old vector
-    auto in_it = nums.begin();
+    nums.resize(0);
     for (auto& buk: buckets) {
         auto vec_ref = buk.get_data();
-        for (auto num: vec_ref) {
-            *in_it = num;
-            in_it++;
-        }
+        for (auto num: vec_ref) nums.push_back(num);
     }
 }
 
@@ -121,15 +118,11 @@ void counting_sort(std::vector<T>& nums) {
     for (auto num: nums) {
         counts[num - min]++;
     }
-    auto in_it = nums.begin();
-    while (in_it != nums.end()) {
-        for (int num = 0; num < counts.size(); ++num) {
-            int repeat = counts[num];
-            while (repeat--) {
-                *in_it = num + min;
-                in_it++;
-            }
-        }
+    // Overwrite old vector
+    nums.resize(0);
+    for (int num = 0; num < counts.size(); ++num) {
+        int repeat = counts[num];
+        while (repeat--) nums.push_back(num + min);
     }
 }
 
@@ -184,14 +177,9 @@ void pigeonhole_sort(std::vector<T>& nums) {
         holes[num - min].push_back(num);
     }
     // Write back to nums using data in holes
-    auto in_it = nums.begin();
+    nums.resize(0);
     for (auto& hole: holes) {
-        if (!hole.empty()) {
-            for (T num: hole) {
-                *in_it = num;
-                in_it++;
-            }
-        }
+        for (T num: hole) nums.push_back(num);
     }
 }
 
