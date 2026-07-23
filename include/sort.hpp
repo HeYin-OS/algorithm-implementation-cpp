@@ -193,3 +193,37 @@ void pigeonhole_sort(std::vector<T>& nums) {
         }
     }
 }
+
+
+template<typename T>
+void binarytree_sort(std::vector<T>& nums) {
+    auto avl_tree = AVL_Tree<T>();
+    for (auto num: nums) {
+        avl_tree.insert(num);
+    }
+    nums = std::move(avl_tree.get_sorted_data());
+}
+
+template<typename T>
+void radix_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void gnome_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void library_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void tim_sort(std::vector<T>& nums) {
+    
+}
+
+// ---------------------------------------------------------------
+// Unstable Sorting Algorithm
+// ---------------------------------------------------------------
