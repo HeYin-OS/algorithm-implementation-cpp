@@ -2,6 +2,8 @@
 
 #include "sort_test_suite.hpp"
 
+////////////////////////////// Stable Sorting Algorithm Tests
+
 REGISTER_INTEGER_SORT_TESTS(BubbleSortTest, bubble_sort)
 
 REGISTER_INTEGER_SORT_TESTS(InsertionSortTest, insertion_sort)
@@ -21,3 +23,6 @@ REGISTER_INTEGER_SORT_TESTS(BinaryTreeSortTest, binarytree_sort)
 REGISTER_INTEGER_SORT_TESTS(RadixSortTest, radix_sort)
 
 REGISTER_INTEGER_SORT_TESTS(GnomeSortTest, gnome_sort)
+
+////////////////////////////// Unstable Sorting Algorithm Tests
+
