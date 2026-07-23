@@ -17,3 +17,7 @@ REGISTER_INTEGER_SORT_TESTS(MergeSortTest, merge_sort)
 REGISTER_INTEGER_SORT_TESTS(PigeonHoleSortTest, pigeonhole_sort)
 
 REGISTER_INTEGER_SORT_TESTS(BinaryTreeSortTest, binarytree_sort)
+
+REGISTER_INTEGER_SORT_TESTS(RadixSortTest, radix_sort)
+
+REGISTER_INTEGER_SORT_TESTS(GnomeSortTest, gnome_sort)
