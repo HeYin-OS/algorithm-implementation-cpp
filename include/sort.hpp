@@ -246,3 +246,38 @@ void tim_sort(std::vector<T>& nums) {
 // ---------------------------------------------------------------
 // Unstable Sorting Algorithm
 // ---------------------------------------------------------------
+
+template<typename T>
+void selection_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void shell_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void heap_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void quick_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void three_way_quick_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void intro_sort(std::vector<T>& nums) {
+    
+}
+
+template<typename T>
+void pdq_sort(std::vector<T>& nums) {
+    
+}
