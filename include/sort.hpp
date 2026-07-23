@@ -227,12 +227,15 @@ void radix_sort(std::vector<T>& nums) {
 
 template<typename T>
 void gnome_sort(std::vector<T>& nums) {
-    
-}
-
-template<typename T>
-void library_sort(std::vector<T>& nums) {
-    
+    if (nums.size() < 2) return;
+    for (int idx = 1; idx < nums.size(); ++idx) {
+        auto curr_idx = idx;
+        // Swap until: lower idx < higher idx
+        while (curr_idx > 0 && nums[curr_idx] < nums[curr_idx - 1]) {
+            std::swap(nums[curr_idx], nums[curr_idx - 1]);
+            curr_idx--;
+        }
+    }
 }
 
 template<typename T>
