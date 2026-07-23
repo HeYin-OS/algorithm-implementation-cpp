@@ -1,3 +1,7 @@
+#pragma once
+
+#include "tree.hpp"
+
 #include <algorithm>
 #include <vector>
 
