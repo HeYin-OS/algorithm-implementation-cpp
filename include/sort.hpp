@@ -261,9 +261,40 @@ void selection_sort(std::vector<T>& nums) {
     }
 }
 
+// Decrease increment sorting
 template<typename T>
 void shell_sort(std::vector<T>& nums) {
-    
+    const int n = nums.size();
+    if (n < 2) return;
+    auto step = n / 2;
+    // Decrease step towards 1
+    while (step > 0) {
+        // Initial index for each handled group
+        for (int idx_group_initial = 0; idx_group_initial < step; ++idx_group_initial) {
+            // Insertion sort with step, start from second one
+            for (int idx = idx_group_initial + step; idx < n; idx += step) {
+                // Use temp to store minimal element
+                auto temp = nums[idx];
+                // Traverse from the one before idx
+                int j = idx - step;
+                // Until j == 0
+                while (j >= 0) {
+                    // If temp should take this position
+                    if (temp < nums[j]) {
+                        // Move idx=j to idx=j+step
+                        nums[j + step] = nums[j];
+                    } else break;
+                    // Move backward
+                    j -= step;
+                }
+                // The element at idx=j means that
+                // the one bigger than temp or idx=-1(no one bigger than it)
+                // so that use idx=j+step
+                nums[j + step] = temp;
+            }
+        }
+        step /= 2;
+    }
 }
 
 template<typename T>
