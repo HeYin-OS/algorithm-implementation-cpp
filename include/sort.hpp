@@ -418,8 +418,41 @@ void quick_sort(std::vector<T>& nums) {
 }
 
 template<typename T>
+std::pair<int, int> _pivot_partition_3_way(std::vector<T>& nums, int start_idx, int end_idx, bool use_random_pick) {
+    // Randomly pick pivot
+    if (use_random_pick) std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
+    // [start_idx, less_end) -> less area
+    // [less_end, current_start) -> equal area
+    // [greater_start, end_idx) -> greater area
+    auto less_end = start_idx, current_start = start_idx, greater_start = end_idx - 1;
+    while (current_start < greater_start) {
+        if (nums[current_start] < nums[end_idx - 1]) {
+            std::swap(nums[less_end++], nums[current_start++]);
+        } else if (nums[current_start] == nums[end_idx - 1]) {
+            current_start++;
+        } else {
+            std::swap(nums[current_start], nums[--greater_start]);
+        }
+    }
+    return {less_end, greater_start};
+}
+
+template<typename T>
+void _three_way_quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
+    if (end_idx - start_idx < 2) return;
+    // Perform pivot-based division (Result: left indices < pivot indices (equal) < right indices)
+    auto [pivot_start, pivot_end] = _pivot_partition_3_way(nums, start_idx, end_idx, true);
+    // Recursively sort left area
+    _three_way_quick_sort_impl(nums, start_idx, pivot_start);
+    // Recursively sort right area
+    _three_way_quick_sort_impl(nums, pivot_end, end_idx);
+}
+
+template<typename T>
 void three_way_quick_sort(std::vector<T>& nums) {
-    
+    const int n = nums.size();
+    if (n < 2) return;
+    _three_way_quick_sort_impl(nums, 0, n);
 }
 
 template<typename T>
