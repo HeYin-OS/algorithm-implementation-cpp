@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <random>
 #include <utility>
+#include <vcruntime_typeinfo.h>
 #include <vector>
 
 // ---------------------------------------------------------------
@@ -380,11 +381,11 @@ inline int _random_pick_idx(int start_idx, int end_idx) {
 }
 
 template<typename T>
-void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
-    if (end_idx - start_idx < 2) return;
+int _pivot_partition_2_way(std::vector<T>& nums, int start_idx, int end_idx, bool use_random_pick) {
     // Randomly pick pivot
-    std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
-    // Perform pivot-based division (Result: left indices <= pivot idx <= right indices)
+    if (use_random_pick) std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
+    // Use left to mark initial idx of unhandled area,
+    // right to mark initial idx of larger-than-pivot area
     auto left = start_idx, right = end_idx - 1;
     while (left < right) {
         while (nums[left] > nums[end_idx - 1]) {
@@ -394,10 +395,18 @@ void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
         left++;
     }
     if (right != end_idx - 1) std::swap(nums[right], nums[end_idx - 1]);
+    return right;
+}
+
+template<typename T>
+void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
+    if (end_idx - start_idx < 2) return;
+    // Perform pivot-based division (Result: left indices <= pivot idx <= right indices)
+    auto pivot = _pivot_partition_2_way(nums, start_idx, end_idx, true);
     // Recursively sort left area
-    _quick_sort_impl(nums, start_idx, right);
+    _quick_sort_impl(nums, start_idx, pivot);
     // Recursively sort right area
-    _quick_sort_impl(nums, right, end_idx);
+    _quick_sort_impl(nums, pivot, end_idx);
 }
 
 template<typename T>
