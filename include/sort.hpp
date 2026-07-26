@@ -304,50 +304,51 @@ void shell_sort(std::vector<T>& nums) {
 // Exmaple Heap Structure:        1     2   
 //                               / \   / \
 //                              3   4 5   6
-int inline _heap_l_child_idx(int root_idx) {return 2 * root_idx + 1;} // 0 -> 1 ; 1 -> 3
-int inline _heap_r_child_idx(int root_idx) {return 2 * root_idx + 2;} // 0 -> 2 ; 1 -> 4
-int inline _heap_father_idx(int child_idx) {return (child_idx - 1) / 2;} // 1 or 2 -> 0 ; 3 or 4 -> 1
+int inline _heap_l_child_idx(int root_idx, int offset) {return 2 * (root_idx - offset) + offset + 1;} // 0 -> 1 ; 1 -> 3
+int inline _heap_r_child_idx(int root_idx, int offset) {return 2 * (root_idx - offset) + offset + 2;} // 0 -> 2 ; 1 -> 4
+int inline _heap_father_idx(int child_idx, int offset) {return (child_idx - offset - 1) / 2 + offset;} // 1 or 2 -> 0 ; 3 or 4 -> 1
 
 template<typename T>
-void inline _make_heap_impl(std::vector<T>& nums) {
-    const int n = nums.size();
+void inline _make_heap_impl(std::vector<T>& nums, int start_idx, int end_idx) {
+    const int length = end_idx - start_idx;
     int heap_size = 1;
-    while (heap_size != n) {
-        auto insert_idx = heap_size;
+    while (heap_size < length) {
+        auto insert_idx = heap_size + start_idx;
         while (true) {
-            auto father_idx = _heap_father_idx(insert_idx);
+            auto father_idx = _heap_father_idx(insert_idx, start_idx);
             // Swap root and child
             if (nums[insert_idx] > nums[father_idx]) std::swap(nums[insert_idx], nums[father_idx]);
             else break;
             // End of heap (strict-order procedure)
-            if (father_idx == 0) break;
+            if (father_idx == start_idx) break;
             // Continue search along father node
-            auto old_father = father_idx;
-            father_idx = _heap_father_idx(old_father);
-            insert_idx = old_father;
+            insert_idx = father_idx;
         }
         heap_size++;
     }
 }
 
 template<typename T>
-void inline _heap_sort_impl(std::vector<T>& nums) {
-    int heap_size = nums.size();
+void inline _heap_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
+    const int length = end_idx - start_idx;
+    int heap_size = end_idx - start_idx;
     while (heap_size > 0) {
         // Move top element to tail
-        std::swap(nums[heap_size - 1], nums[0]);
+        auto tail_idx = heap_size + start_idx - 1;
+        std::swap(nums[tail_idx], nums[start_idx]);
         heap_size--;
-        // Maintain heap from idx=0
-        int idx = 0;
-        while (idx < heap_size) {
-            auto l_child_idx = _heap_l_child_idx(idx);
-            auto r_child_idx = _heap_r_child_idx(idx);
+        // Maintain heap from idx=start_idx
+        auto idx = start_idx;
+        auto heap_end_idx = start_idx + heap_size;
+        while (idx < heap_end_idx) {
+            auto l_child_idx = _heap_l_child_idx(idx, start_idx);
+            auto r_child_idx = _heap_r_child_idx(idx, start_idx);
             // Left child index outside heap means that
             // we do not need to compare two childs
             // since left one always comes smaller idx.
-            if (l_child_idx >= heap_size) break;
+            if (l_child_idx >= heap_end_idx) break;
             // Left child is in range but right child is out of range.
-            else if (r_child_idx >= heap_size) {
+            else if (r_child_idx >= heap_end_idx) {
                 if (nums[idx] > nums[l_child_idx]) break;
                 std::swap(nums[idx], nums[l_child_idx]);
                 idx = l_child_idx;
@@ -366,8 +367,8 @@ template<typename T>
 void heap_sort(std::vector<T>& nums) {
     const int n = nums.size();
     if (n < 2) return;
-    _make_heap_impl(nums);
-    _heap_sort_impl(nums);
+    _make_heap_impl(nums, 0, n);
+    _heap_sort_impl(nums, 0, n);
 }
 
 inline auto&& _get_random_engine() {
