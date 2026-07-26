@@ -406,7 +406,7 @@ void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
     // Recursively sort left area
     _quick_sort_impl(nums, start_idx, pivot);
     // Recursively sort right area
-    _quick_sort_impl(nums, pivot, end_idx);
+    _quick_sort_impl(nums, pivot + 1, end_idx);
 }
 
 template<typename T>
