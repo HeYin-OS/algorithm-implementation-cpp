@@ -388,11 +388,12 @@ int _pivot_partition_2_way(std::vector<T>& nums, int start_idx, int end_idx, boo
     // right to mark initial idx of larger-than-pivot area
     auto left = start_idx, right = end_idx - 1;
     while (left < right) {
-        while (nums[left] > nums[end_idx - 1]) {
+        if (nums[left] > nums[end_idx - 1]) {
             if (left == right) break;
             std::swap(nums[left], nums[--right]);
+        } else {
+            left++;
         }
-        left++;
     }
     std::swap(nums[right], nums[end_idx - 1]);
     return right;
