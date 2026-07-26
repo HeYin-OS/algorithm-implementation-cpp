@@ -382,7 +382,9 @@ inline int _random_pick_idx(int start_idx, int end_idx) {
 template<typename T>
 void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
     if (end_idx - start_idx < 2) return;
+    // Randomly pick pivot
     std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
+    // Perform pivot-based division (Result: left indices <= pivot idx <= right indices)
     auto left = start_idx, right = end_idx - 1;
     while (left < right) {
         while (nums[left] > nums[end_idx - 1]) {
@@ -392,7 +394,9 @@ void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
         left++;
     }
     if (right != end_idx - 1) std::swap(nums[right], nums[end_idx - 1]);
+    // Recursively sort left area
     _quick_sort_impl(nums, start_idx, right);
+    // Recursively sort right area
     _quick_sort_impl(nums, right, end_idx);
 }
 
