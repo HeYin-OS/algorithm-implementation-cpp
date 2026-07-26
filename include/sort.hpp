@@ -3,6 +3,7 @@
 #include "tree.hpp"
 
 #include <algorithm>
+#include <random>
 #include <utility>
 #include <vector>
 
@@ -368,9 +369,38 @@ void heap_sort(std::vector<T>& nums) {
     _heap_sort_impl(nums);
 }
 
+inline auto&& _get_random_engine() {
+    static std::random_device rd;
+    static std::mt19937 g(rd());
+    return g;
+}
+
+inline int _random_pick_idx(int start_idx, int end_idx) {
+    return std::uniform_int_distribution<int>(start_idx, end_idx)(_get_random_engine());
+}
+
+template<typename T>
+void _quick_sort_impl(std::vector<T>& nums, int start_idx, int end_idx) {
+    if (end_idx - start_idx < 2) return;
+    std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
+    auto left = start_idx, right = end_idx - 1;
+    while (left < right) {
+        while (nums[left] > nums[end_idx - 1]) {
+            if (left == right) break;
+            std::swap(nums[left], nums[--right]);
+        }
+        left++;
+    }
+    if (right != end_idx - 1) std::swap(nums[right], nums[end_idx - 1]);
+    _quick_sort_impl(nums, start_idx, right);
+    _quick_sort_impl(nums, right, end_idx);
+}
+
 template<typename T>
 void quick_sort(std::vector<T>& nums) {
-    
+    const int n = nums.size();
+    if (n < 2) return;
+    _quick_sort_impl(nums, 0, n);
 }
 
 template<typename T>
