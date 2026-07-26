@@ -394,7 +394,7 @@ int _pivot_partition_2_way(std::vector<T>& nums, int start_idx, int end_idx, boo
         }
         left++;
     }
-    if (right != end_idx - 1) std::swap(nums[right], nums[end_idx - 1]);
+    std::swap(nums[right], nums[end_idx - 1]);
     return right;
 }
 
