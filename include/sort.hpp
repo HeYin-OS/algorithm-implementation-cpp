@@ -241,11 +241,6 @@ void gnome_sort(std::vector<T>& nums) {
     }
 }
 
-template<typename T>
-void tim_sort(std::vector<T>& nums) {
-    
-}
-
 // ---------------------------------------------------------------
 // Unstable Sorting Algorithm
 // ---------------------------------------------------------------
@@ -498,9 +493,4 @@ void intro_sort(std::vector<T>& nums) {
     auto depth_limit = static_cast<int>(2 * (std::log(n) / std::log(2)));
     decltype(depth_limit) depth{};
     _quick_sort_impl_with_depth(nums, 0, n, depth, depth_limit);
-}
-
-template<typename T>
-void pdq_sort(std::vector<T>& nums) {
-    
 }
