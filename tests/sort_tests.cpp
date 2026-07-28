@@ -35,3 +35,5 @@ REGISTER_INTEGER_SORT_TESTS(HeapSortTest, heap_sort)
 REGISTER_INTEGER_SORT_TESTS(QuickSortTest, quick_sort)
 
 REGISTER_INTEGER_SORT_TESTS(ThreeWayQuickSortTest, three_way_quick_sort)
+
+REGISTER_INTEGER_SORT_TESTS(IntroSortTest, intro_sort)
