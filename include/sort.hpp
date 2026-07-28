@@ -449,6 +449,7 @@ std::pair<int, int> _pivot_partition_3_way(std::vector<T>& nums, int start_idx, 
             std::swap(nums[current_start], nums[--greater_start]);
         }
     }
+    std::swap(nums[greater_start], nums[end_idx - 1]);
     return {less_end, greater_start};
 }
 
