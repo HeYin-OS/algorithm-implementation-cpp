@@ -382,9 +382,23 @@ inline int _random_pick_idx(int start_idx, int end_idx) {
 }
 
 template<typename T>
+inline int _quick_middle_pick_idx(std::vector<T>& nums, int start_idx, int end_idx) {
+    auto mid_idx = (start_idx + end_idx) / 2;
+    if ((nums[start_idx] < nums[mid_idx]) != (nums[start_idx] < nums[end_idx - 1])) {
+        return start_idx;
+    }
+
+    if ((nums[mid_idx] < nums[start_idx]) != (nums[mid_idx] < nums[end_idx - 1])) {
+        return mid_idx;
+    }
+
+    return end_idx - 1;
+}
+
+template<typename T>
 int _pivot_partition_2_way(std::vector<T>& nums, int start_idx, int end_idx, bool use_random_pick) {
     // Randomly pick pivot
-    if (use_random_pick) std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
+    if (use_random_pick) std::swap(nums[_quick_middle_pick_idx(nums, start_idx, end_idx)], nums[end_idx - 1]);
     // Use left to mark initial idx of unhandled area,
     // right to mark initial idx of larger-than-pivot area
     auto left = start_idx, right = end_idx - 1;
@@ -421,7 +435,7 @@ void quick_sort(std::vector<T>& nums) {
 template<typename T>
 std::pair<int, int> _pivot_partition_3_way(std::vector<T>& nums, int start_idx, int end_idx, bool use_random_pick) {
     // Randomly pick pivot
-    if (use_random_pick) std::swap(nums[_random_pick_idx(start_idx, end_idx - 1)], nums[end_idx - 1]);
+    if (use_random_pick) std::swap(nums[_quick_middle_pick_idx(nums, start_idx, end_idx)], nums[end_idx - 1]);
     // [start_idx, less_end) -> less area
     // [less_end, current_start) -> equal area
     // [greater_start, end_idx) -> greater area
