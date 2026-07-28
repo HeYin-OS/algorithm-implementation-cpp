@@ -3,6 +3,7 @@
 #include "tree.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <random>
 #include <utility>
 #include <vcruntime_typeinfo.h>
