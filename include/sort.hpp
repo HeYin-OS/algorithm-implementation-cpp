@@ -438,6 +438,7 @@ std::pair<int, int> _pivot_partition_3_way(std::vector<T>& nums, int start_idx, 
     if (use_random_pick) std::swap(nums[_quick_middle_pick_idx(nums, start_idx, end_idx)], nums[end_idx - 1]);
     // [start_idx, less_end) -> less area
     // [less_end, current_start) -> equal area
+    // [current_start, greater_start) -> unsearched area
     // [greater_start, end_idx) -> greater area
     auto less_end = start_idx, current_start = start_idx, greater_start = end_idx - 1;
     while (current_start < greater_start) {
