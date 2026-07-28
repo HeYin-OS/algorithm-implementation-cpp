@@ -473,8 +473,30 @@ void three_way_quick_sort(std::vector<T>& nums) {
 }
 
 template<typename T>
+void _quick_sort_impl_with_depth(std::vector<T>& nums, int start_idx, int end_idx, int& depth, const int limit) {
+    if (end_idx - start_idx < 2) return;
+    if (++depth > limit) {
+        _make_heap_impl(nums, start_idx, end_idx);
+        _heap_sort_impl(nums, start_idx, end_idx);
+        depth--;
+        return;
+    }
+    // Perform pivot-based division (Result: left indices <= pivot idx <= right indices)
+    auto pivot = _pivot_partition_2_way(nums, start_idx, end_idx, true);
+    // Recursively sort left area
+    _quick_sort_impl_with_depth(nums, start_idx, pivot, depth, limit);
+    // Recursively sort right area
+    _quick_sort_impl_with_depth(nums, pivot + 1, end_idx, depth, limit);
+    depth--;
+}
+
+template<typename T>
 void intro_sort(std::vector<T>& nums) {
-    
+    const int n = nums.size();
+    if (n < 2) return;
+    auto depth_limit = static_cast<int>(2 * (std::log(n) / std::log(2)));
+    decltype(depth_limit) depth{};
+    _quick_sort_impl_with_depth(nums, 0, n, depth, depth_limit);
 }
 
 template<typename T>
